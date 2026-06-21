@@ -43,10 +43,7 @@ def _relational_dialect_name(relational_engine: Any) -> Optional[str]:
 
 def _effective_data_per_batch(data_per_batch: Optional[int], relational_engine: Any) -> int:
     effective_data_per_batch = max(1, int(data_per_batch or 1))
-    if (
-        effective_data_per_batch > 1
-        and _relational_dialect_name(relational_engine) == "sqlite"
-    ):
+    if effective_data_per_batch > 1 and _relational_dialect_name(relational_engine) == "sqlite":
         logger.info(
             "SQLite relational backend detected; serializing pipeline data items to avoid "
             "concurrent write locks."
